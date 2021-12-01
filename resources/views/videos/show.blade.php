@@ -9,7 +9,8 @@
             allowfullscreen>
 
         </iframe>
-        <div class="inline-block w-full max-w-7xl w-5/6 bg-white rounded-lg shadow-lg px-4 py-4 md:px-6 xl:px-15 xl:py-5 2xl:px-20 2xl:py-10 m-4 border-t-2 border-indigo-500 rounded-t-none	">
+
+        <div class="inline-block w-full max-w-7xl w-5/6 bg-white rounded-lg shadow-lg px-4 py-4 md:px-6 xl:px-15 xl:py-5 2xl:px-20 2xl:py-10 m-4 border-t-2 border-indigo-500 rounded-t-none">
             <h2 class="text-gray-900 w	uppercase font-bold text-2xl tracking-tight border-b border-gray-300">
                 {{ $video->title }}
             </h2>
@@ -20,7 +21,7 @@
                         Data de publicació
                     </dt>
                     <dd class="mt-1 text-1xl font-semibold text-gray-900">
-                        {{ $video->published_at }}
+                        {{ $video->formatted_published_at }}
                     </dd>
                 </div>
 

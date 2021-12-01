@@ -13,9 +13,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/mockup', function () {
+    return view('video_mockup', [
+        'title' => 'Title',
+        'url' => 'https://www.youtube.com/embed/ofSbYUEml4c?controls=0',
+        'description' => 'DESCRIPTION'
+    ]);
 });
 
 Route::get('/videos/{id}', [ VideosController::class,'show']);
