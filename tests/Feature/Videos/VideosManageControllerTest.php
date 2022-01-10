@@ -51,23 +51,33 @@ class VideosManageControllerTest extends TestCase
         $response->assertStatus(403);
     }
 
+    /** @test  */
+    public function user_without_permissions_cannot_store_videos() {
+        $this->loginAsRegularUser();
+
+        $video = objectify($videoArray = [
+            'title' => 'HTTP for noobs',
+            'description' => 'Te ensenyo tot el que se sobre HTTP',
+            'url' => 'https://tubeme.acacha.org/http',
+        ]);
+
+        $response = $this->post('/manage/videos',$videoArray);
+
+        $response->assertStatus(403);
+    }
 
     /** @test  */
     public function user_with_permissions_can_store_videos()
     {
         $this->loginAsVideoManager();
 
-        $video = objectify([
+        $video = objectify($videoArray = [
             'title' => 'HTTP for noobs',
             'description' => 'Te ensenyo tot el que se sobre HTTP',
             'url' => 'https://tubeme.acacha.org/http',
         ]);
 
-        $response = $this->post('/manage/videos',[
-            'title' => 'HTTP for noobs',
-            'description' => 'Te ensenyo tot el que se sobre HTTP',
-            'url' => 'https://tubeme.acacha.org/http',
-        ]);
+        $response = $this->post('/manage/videos',$videoArray);
 
         $response->assertRedirect(route('manage.videos'));
         $response->assertSessionHas('status', 'Successfully created');
@@ -79,7 +89,6 @@ class VideosManageControllerTest extends TestCase
         $this->assertEquals($videoDB->description,$video->description);
         $this->assertEquals($videoDB->url,$video->url);
         $this->assertNull($video->published_at);
-
 
     }
 
@@ -118,17 +127,14 @@ class VideosManageControllerTest extends TestCase
         $response->assertDontSee('<form data-qa="form_video_create"',false);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function user_with_permissions_can_manage_videos()
     {
         $this->loginAsVideoManager();
 
         $videos = create_sample_videos();
+
         $response = $this->get('/manage/videos');
-
-
 
         $response->assertStatus(200);
         $response->assertViewIs('videos.manage.index');
@@ -141,7 +147,6 @@ class VideosManageControllerTest extends TestCase
             $response->assertSee($video->id);
             $response->assertSee($video->title);
         }
-
     }
 
     /** @test */
@@ -162,13 +167,10 @@ class VideosManageControllerTest extends TestCase
     /** @test */
     public function superadmins_can_manage_videos()
     {
-        //1
         $this->loginAsSuperAdmin();
 
-        // 2 executar
         $response = $this->get('/manage/videos');
 
-        // 3 Provar assert
         $response->assertStatus(200);
         $response->assertViewIs('videos.manage.index');
     }
