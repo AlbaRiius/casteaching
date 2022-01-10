@@ -115,7 +115,11 @@
                             <tbody>
                             <!-- Odd row -->
                             @foreach($videos as $video)
-                                <tr class="bg-white">
+                                @if($loop->even)
+                                    <tr class="bg-gray-50">
+                                @else
+                                    <tr class="bg-white">
+                                @endif
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         {{ $video->id }}
                                     </td>
