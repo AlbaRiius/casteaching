@@ -17,33 +17,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
         create_default_user();
 
         create_superadmin_user();
 
         create_regular_user();
 
+        create_video_manager_user();
+
+        create_user_manager_user();
+
         create_default_videos();
 
         create_sample_videos();
 
         create_permissions();
-//        User::create([
-//            'name' => 'Alba Rius Rivas',
-//            'email' => 'arius@iesebre.com',
-//            'password' => Hash::make(config('casteaching.default_user.password'))
-//        ]);
-//        Video::create([
-//            'title' => 'Ubuntu 101',
-//            'description' => '# Here description',
-//            'url' => 'https://youtu.be/w8j07_DBl_I',
-//            'published_at' => Carbon::parse('December 13, 2020 8:00pm'),
-//            'previous' => null,
-//            'next' => null,
-//            'series_id' => 1
-//        ]);
-
     }
 }
