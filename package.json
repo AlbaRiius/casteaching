@@ -1,5 +1,4 @@
 {
-    "private": true,
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
@@ -21,6 +20,7 @@
         "tailwindcss": "^2.2.2"
     },
     "dependencies": {
-        "composer": "^4.1.0"
+        "casteaching": "file:./casteaching_package",
+        "semver": "^7.3.5"
     }
 }
