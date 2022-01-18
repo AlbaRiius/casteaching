@@ -17,10 +17,13 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "postcss-import": "^14.0.1",
-        "tailwindcss": "^2.2.2"
+        "tailwindcss": "^2.2.2",
+        "vue-loader": "^15.9.8",
+        "vue-template-compiler": "^2.6.14"
     },
     "dependencies": {
         "casteaching": "file:./casteaching_package",
-        "semver": "^7.3.5"
+        "semver": "^7.3.5",
+        "vue": "^2.6.14"
     }
 }
