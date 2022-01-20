@@ -1391,11 +1391,11 @@ select {
 .mb-4 {
 	margin-bottom: 1rem;
 }
-.mb-1 {
-	margin-bottom: 0.25rem;
-}
 .-mt-px {
 	margin-top: -1px;
+}
+.mb-1 {
+	margin-bottom: 0.25rem;
 }
 .ml-auto {
 	margin-left: auto;
@@ -1703,11 +1703,11 @@ select {
 .border-b {
 	border-bottom-width: 1px;
 }
-.border-r-0 {
-	border-right-width: 0px;
-}
 .border-t-2 {
 	border-top-width: 2px;
+}
+.border-r-0 {
+	border-right-width: 0px;
 }
 .border-r {
 	border-right-width: 1px;
@@ -3025,14 +3025,14 @@ select {
 		padding: 0.75rem;
 	}
 
-	.md\:px-4 {
-		padding-left: 1rem;
-		padding-right: 1rem;
-	}
-
 	.md\:px-6 {
 		padding-left: 1.5rem;
 		padding-right: 1.5rem;
+	}
+
+	.md\:px-4 {
+		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 }
 @media (min-width: 1024px) {
