@@ -1,0 +1,3 @@
+[submodule "casteaching_arr_package"]
+	path = casteaching_arr_package
+	url = git@github.com:AlbaRiius/casteaching_arr_package.git
