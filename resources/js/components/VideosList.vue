@@ -81,6 +81,9 @@ export default
         bus.$on('created',() => {
             this.refresh()
         });
+        bus.$on('updated',() => {
+            this.refresh()
+        });
     },
     methods: {
         async getVideos() {

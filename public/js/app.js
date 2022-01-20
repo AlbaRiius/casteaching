@@ -7768,6 +7768,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _bus_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../bus.js */ "./resources/js/bus.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7779,6 +7780,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "VideoDestroyLink",
   props: {
@@ -7803,20 +7805,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _this.$emit('removed');
 
-                _context.next = 9;
+                _bus_js__WEBPACK_IMPORTED_MODULE_1__["default"].$emit('status', 'Video removed succsessfully');
+                _context.next = 10;
                 break;
 
-              case 6:
-                _context.prev = 6;
+              case 7:
+                _context.prev = 7;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 6]]);
+        }, _callee, null, [[0, 7]]);
       }))();
     }
   }
@@ -7835,16 +7838,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../bus */ "./resources/js/bus.js");
 //
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "VideoEditLink",
   props: {
     video: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    edit: function edit() {
+      _bus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('edit', this.video);
     }
   }
 });
@@ -7934,15 +7944,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "VideoForm",
   data: function data() {
     return {
-      video: {}
+      video: {},
+      status: 'creating'
     };
   },
   methods: {
+    save: function save() {
+      if (this.status === 'creating') {
+        this.store();
+      }
+
+      if (this.status === 'editing') {
+        this.update();
+      }
+    },
     store: function store() {
       try {
         window.casteaching.video.create({
@@ -7955,7 +7976,28 @@ __webpack_require__.r(__webpack_exports__);
       } catch (error) {
         console.log(error);
       }
+    },
+    update: function update() {
+      try {
+        window.casteaching.video.update(this.video.id, {
+          title: this.video.title,
+          description: this.video.description,
+          url: this.video.url
+        });
+        _bus_js__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('created');
+        _bus_js__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('status', 'Video updated successfully');
+      } catch (error) {
+        console.log(error);
+      }
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    _bus_js__WEBPACK_IMPORTED_MODULE_0__["default"].$on('edit', function (video) {
+      _this.video = video;
+      _this.status = 'editing';
+    });
   }
 });
 
@@ -8099,8 +8141,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _bus_js__WEBPACK_IMPORTED_MODULE_4__["default"].$on('created', function () {
                 _this.refresh();
               });
+              _bus_js__WEBPACK_IMPORTED_MODULE_4__["default"].$on('updated', function () {
+                _this.refresh();
+              });
 
-            case 2:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -27013,8 +27058,9 @@ var render = function () {
   return _c(
     "a",
     {
-      staticClass: "text-indigo-600 hover:text-indigo-900",
-      attrs: { href: "/vue/manage/videos/" + _vm.video.id, target: "_blank" },
+      staticClass: "text-indigo-600 hover:text-indigo-900 cursor-pointer",
+      attrs: { target: "_blank" },
+      on: { click: _vm.edit },
     },
     [_vm._v("Edit")]
   )
@@ -27073,7 +27119,7 @@ var render = function () {
                     on: {
                       submit: function ($event) {
                         $event.preventDefault()
-                        return _vm.store.apply(null, arguments)
+                        return _vm.save.apply(null, arguments)
                       },
                     },
                   },
@@ -27291,7 +27337,32 @@ var render = function () {
                           ]
                         ),
                         _vm._v(" "),
-                        _vm._m(1),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "px-4 py-3 bg-gray-50 text-right sm:px-6",
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                                attrs: { type: "submit" },
+                              },
+                              [
+                                _vm.status === "creating"
+                                  ? _c("span", [_vm._v("Crear")])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.status === "editing"
+                                  ? _c("span", [_vm._v("Editar")])
+                                  : _vm._e(),
+                              ]
+                            ),
+                          ]
+                        ),
                       ]
                     ),
                   ]
@@ -27324,30 +27395,6 @@ var staticRenderFns = [
         ]),
       ]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "px-4 py-3 bg-gray-50 text-right sm:px-6" },
-      [
-        _c(
-          "button",
-          {
-            staticClass:
-              "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
-            attrs: { type: "submit" },
-          },
-          [
-            _vm._v(
-              "\n                                Crear\n                            "
-            ),
-          ]
-        ),
-      ]
-    )
   },
 ]
 render._withStripped = true
