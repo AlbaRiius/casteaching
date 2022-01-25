@@ -1706,11 +1706,11 @@ select {
 .border-t-2 {
 	border-top-width: 2px;
 }
-.border-r {
-	border-right-width: 1px;
-}
 .border-r-0 {
 	border-right-width: 0px;
+}
+.border-r {
+	border-right-width: 1px;
 }
 .border-gray-300 {
 	--tw-border-opacity: 1;

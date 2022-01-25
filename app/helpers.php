@@ -14,7 +14,7 @@ if (! function_exists('create_default_user')) {
         $user = User::create([
             'name' => config('casteaching.default_user.name', 'Alba Rius Rivas'),
             'email' => config('casteaching.default_user.email','arius@iesebre.com'),
-            'password' => Hash::make(config('casteaching.default_user.password','12345678'))
+            'password' => Hash::make('12345678')
         ]);
 
         $user->superadmin = true;
@@ -30,7 +30,7 @@ if (! function_exists('create_default_videos')) {
         Video::create([
             'title' => 'Ubuntu 101',
             'description' => '# Here description',
-            'url' => 'https://youtu.be/w8j07_DBl_I',
+            'url' => 'https://www.youtube.com/embed/w8j07_DBl_I',
             'published_at' => Carbon::parse('December 13, 2020 8:00pm'),
             'previous' => null,
             'next' => null,
@@ -168,17 +168,17 @@ if (! function_exists('create_sample_videos')) {
         $video1 = Video::create([
             'title' => 'Vídeo 1',
             'description' => 'Bla bla bla',
-            'url' => 'https://youtu.be/a-3kfT9hZk4'
+            'url' => 'https://www.youtube.com/embed/w8j07_DBl_I'
         ]);
         $video2 = Video::create([
             'title' => 'Vídeo 2',
             'description' => 'Bla bla bla',
-            'url' => 'https://youtu.be/a7GV5aReVDQ'
+            'url' => 'https://www.youtube.com/embed/w8j07_DBl_I'
         ]);
         $video3 = Video::create([
             'title' => 'Vídeo 3',
             'description' => 'Bla bla bla',
-            'url' => 'https://youtu.be/--ZfoRC2JBw'
+            'url' => 'https://www.youtube.com/embed/w8j07_DBl_I'
         ]);
 
         return [$video1, $video2, $video3];

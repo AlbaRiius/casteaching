@@ -33,10 +33,6 @@ class VideosManageController extends Controller
         return redirect()->route('manage.videos');
     }
 
-    public function show($id)
-    {
-        //
-    }
 
     public function edit($id)
     {
