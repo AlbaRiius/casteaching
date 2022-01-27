@@ -92,7 +92,7 @@ export default {
         },
         store() {
             try {
-                window.casteaching.video.create({
+                window.api.video.create({
                     title: this.video.title,
                     description: this.video.description,
                     url: this.video.url
@@ -105,7 +105,7 @@ export default {
         },
         update() {
             try {
-                window.casteaching.video.update(this.video.id, {
+                window.api.video.update(this.video.id, {
                     title: this.video.title,
                     description: this.video.description,
                     url: this.video.url

@@ -1,93 +1,114 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/@albariius/casteaching_arr/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/index.js ***!
-  \**********************************************************/
+/***/ "./node_modules/@acacha/casteaching/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/index.js ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/@acacha/casteaching/node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 
-//TOKEN 2L2GRudIBnKjiRwnWAjXWfoEmDuM5SEvyyusP0Ro
-const apiClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
-    baseURL: 'http://casteaching.test/api',
-    withCredentials: true,
-    headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer 2L2GRudIBnKjiRwnWAjXWfoEmDuM5SEvyyusP0Ro'
-    }
-})
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-    videos: async function (){
-        const response= await apiClient.get('/videos')
-        return response.data
-    },
-    video: {
-        show: async function (id) {
-            const response = await apiClient.get('/videos/' + id)
-            return response.data
-        },
-        create: async function (data) {
-            const response = await apiClient.post('/videos', data)
-            return response.data
-        },
-        update: async function (id, data) {
-            const response = await apiClient.put('/videos/' + id, data)
-            return response.data
-        },
-        destroy: async function (id) {
-            const response = await apiClient.delete('/videos/' + id)
-            return response.data
-        },
-    }
-});
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(options) {
+    let apiClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+        baseURL: (options && options.baseUrl) || "https://casteaching.test/api",
+        withCredentials: true,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
 
-
+    return {
+        token: null,
+        setToken: function(token) {
+            this.token = token
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
+        },
+        series: async function() {
+            const response = await apiClient.get('/series')
+            return response.data
+        },
+        videos: async function() {
+            const response = await apiClient.get('/videos')
+            return response.data
+        },
+        login:  async function(email,password,device_name) {
+            const postData = {
+                email,
+                password,
+                device_name,
+            }
+            const response = await apiClient.post('/sanctum/token', postData)
+            return response.data
+        },
+        user:  async function() {
+            const response = await apiClient.get('/user')
+            return response.data
+        },
+        video: {
+            show: async function(id) {
+                const response = await apiClient.get('/videos/' + id)
+                return response.data
+            },
+            create: async function(data) {
+                const response = await apiClient.post('/videos',data)
+                return response.data
+            },
+            update: async function(id, data) {
+                const response = await apiClient.put('/videos/' + id,data)
+                return response.data
+            },
+            destroy: async function(id) {
+                const response = await apiClient.delete('/videos/' + id)
+                return response.data
+            },
+        }
+    }
+}
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/index.js":
-/*!*****************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/index.js ***!
-  \*****************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/index.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/index.js ***!
+  \**********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/axios.js");
+module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/axios.js");
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/adapters/xhr.js":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/adapters/xhr.js ***!
-  \****************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/adapters/xhr.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/adapters/xhr.js ***!
+  \*********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
+var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/settle.js");
+var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/cookies.js");
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/buildURL.js");
+var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/buildFullPath.js");
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/parseHeaders.js");
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isURLSameOrigin.js");
+var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/createError.js");
+var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/defaults.js");
+var Cancel = __webpack_require__(/*! ../cancel/Cancel */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/Cancel.js");
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
-var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/settle.js");
-var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/cookies.js");
-var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/buildURL.js");
-var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/buildFullPath.js");
-var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/parseHeaders.js");
-var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isURLSameOrigin.js");
-var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/createError.js");
-var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/defaults.js");
-var Cancel = __webpack_require__(/*! ../cancel/Cancel */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/Cancel.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
     var requestData = config.data;
-    var requestHeaders = config.headers;
+    var requesteaders = config.headers;
     var responseType = config.responseType;
     var onCanceled;
     function done() {
@@ -287,20 +308,21 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/axios.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/axios.js ***!
-  \*********************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/axios.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/axios.js ***!
+  \**************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
-var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/bind.js");
-var Axios = __webpack_require__(/*! ./core/Axios */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/Axios.js");
-var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/mergeConfig.js");
-var defaults = __webpack_require__(/*! ./defaults */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/defaults.js");
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/bind.js");
+var Axios = __webpack_require__(/*! ./core/Axios */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/Axios.js");
+var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/mergeConfig.js");
+var defaults = __webpack_require__(/*! ./defaults */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/defaults.js");
 
 /**
  * Create an instance of Axios
@@ -333,19 +355,21 @@ var axios = createInstance(defaults);
 axios.Axios = Axios;
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/Cancel.js");
-axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/CancelToken.js");
-axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/isCancel.js");
-axios.VERSION = (__webpack_require__(/*! ./env/data */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/env/data.js").version);
+
+axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/Cancel.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/isCancel.js");
+axios.VERSION = (__webpack_require__(/*! ./env/data */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/env/data.js").version);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/spread.js");
+
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/spread.js");
 
 // Expose isAxiosError
-axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isAxiosError.js");
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isAxiosError.js");
 
 module.exports = axios;
 
@@ -355,10 +379,11 @@ module.exports["default"] = axios;
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/Cancel.js":
-/*!*****************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/Cancel.js ***!
-  \*****************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/Cancel.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/Cancel.js ***!
+  \**********************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -385,16 +410,18 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/CancelToken.js":
-/*!**********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/CancelToken.js ***!
-  \**********************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/CancelToken.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/CancelToken.js ***!
+  \***************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(/*! ./Cancel */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/Cancel.js");
+
+var Cancel = __webpack_require__(/*! ./Cancel */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/Cancel.js");
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -515,10 +542,11 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/isCancel.js":
-/*!*******************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/isCancel.js ***!
-  \*******************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/isCancel.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/isCancel.js ***!
+  \************************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -531,21 +559,22 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/Axios.js":
-/*!**************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/Axios.js ***!
-  \**************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/Axios.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/Axios.js ***!
+  \*******************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
-var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/buildURL.js");
-var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/InterceptorManager.js");
-var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/dispatchRequest.js");
-var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/mergeConfig.js");
-var validator = __webpack_require__(/*! ../helpers/validator */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/validator.js");
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
+var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/buildURL.js");
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/InterceptorManager.js");
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/dispatchRequest.js");
+var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/mergeConfig.js");
+var validator = __webpack_require__(/*! ../helpers/validator */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/validator.js");
 
 var validators = validator.validators;
 /**
@@ -566,18 +595,14 @@ function Axios(instanceConfig) {
  *
  * @param {Object} config The config specific for this request (merged with this.defaults)
  */
-Axios.prototype.request = function request(configOrUrl, config) {
+Axios.prototype.request = function request(config) {
   /*eslint no-param-reassign:0*/
   // Allow for axios('example/url'[, config]) a la fetch API
-  if (typeof configOrUrl === 'string') {
-    config = config || {};
-    config.url = configOrUrl;
+  if (typeof config === 'string') {
+    config = arguments[1] || {};
+    config.url = arguments[0];
   } else {
-    config = configOrUrl || {};
-  }
-
-  if (!config.url) {
-    throw new Error('Provided config url is not valid');
+    config = config || {};
   }
 
   config = mergeConfig(this.defaults, config);
@@ -662,9 +687,6 @@ Axios.prototype.request = function request(configOrUrl, config) {
 };
 
 Axios.prototype.getUri = function getUri(config) {
-  if (!config.url) {
-    throw new Error('Provided config url is not valid');
-  }
   config = mergeConfig(this.defaults, config);
   return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
 };
@@ -697,16 +719,16 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/InterceptorManager.js":
-/*!***************************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/InterceptorManager.js ***!
-  \***************************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/InterceptorManager.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/InterceptorManager.js ***!
+  \********************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
 
 function InterceptorManager() {
   this.handlers = [];
@@ -762,17 +784,17 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/buildFullPath.js":
-/*!**********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/buildFullPath.js ***!
-  \**********************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/buildFullPath.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/buildFullPath.js ***!
+  \***************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isAbsoluteURL.js");
-var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/combineURLs.js");
+var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/combineURLs.js");
 
 /**
  * Creates a new URL by combining the baseURL with the requestedURL,
@@ -792,17 +814,17 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 
 
 /***/ }),
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/createError.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/createError.js ***!
+  \*************************************************************************************/
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/createError.js":
-/*!********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/createError.js ***!
-  \********************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(/*! ./enhanceError */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/enhanceError.js");
+var enhanceError = __webpack_require__(/*! ./enhanceError */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/enhanceError.js");
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -822,20 +844,21 @@ module.exports = function createError(message, config, code, request, response) 
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/dispatchRequest.js":
-/*!************************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/dispatchRequest.js ***!
-  \************************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/dispatchRequest.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*****************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
-var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/transformData.js");
-var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/isCancel.js");
-var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/defaults.js");
-var Cancel = __webpack_require__(/*! ../cancel/Cancel */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/cancel/Cancel.js");
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
+var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/transformData.js");
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/isCancel.js");
+var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/defaults.js");
+var Cancel = __webpack_require__(/*! ../cancel/Cancel */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/cancel/Cancel.js");
+
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -920,10 +943,10 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/enhanceError.js":
-/*!*********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/enhanceError.js ***!
-  \*********************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/enhanceError.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/enhanceError.js ***!
+  \**************************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -974,16 +997,18 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/mergeConfig.js":
-/*!********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/mergeConfig.js ***!
-  \********************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/mergeConfig.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/mergeConfig.js ***!
+  \*************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
+
 
 /**
  * Config-specific merge-function which creates a new config-object
@@ -1084,17 +1109,16 @@ module.exports = function mergeConfig(config1, config2) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/settle.js":
-/*!***************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/settle.js ***!
-  \***************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/settle.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/settle.js ***!
+  \********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var createError = __webpack_require__(/*! ./createError */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/createError.js");
-
+var createError = __webpack_require__(/*! ./createError */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/createError.js");
 /**
  * Resolve or reject a Promise based on response status.
  *
@@ -1120,17 +1144,19 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/transformData.js":
-/*!**********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/transformData.js ***!
-  \**********************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/transformData.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/core/transformData.js ***!
+  \***************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
-var defaults = __webpack_require__(/*! ./../defaults */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/defaults.js");
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
+var defaults = __webpack_require__(/*! ./../defaults */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/defaults.js");
+
 
 /**
  * Transform the data for a request or a response
@@ -1153,19 +1179,19 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/defaults.js":
-/*!************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/defaults.js ***!
-  \************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/defaults.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/defaults.js ***!
+  \*****************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 /* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 
 
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
-var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/normalizeHeaderName.js");
-var enhanceError = __webpack_require__(/*! ./core/enhanceError */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/core/enhanceError.js");
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
+var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/normalizeHeaderName.js");
+var enhanceError = __webpack_require__(/*! ./core/enhanceError */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/core/enhanceError.js");
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -1181,10 +1207,11 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/adapters/xhr.js");
+
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/adapters/xhr.js");
   } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/adapters/xhr.js");
+    adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/adapters/xhr.js");
   }
   return adapter;
 }
@@ -1299,22 +1326,24 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/env/data.js":
-/*!************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/env/data.js ***!
-  \************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/env/data.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/env/data.js ***!
+  \*****************************************************************************/
 /***/ ((module) => {
 
 module.exports = {
-  "version": "0.25.0"
+  "version": "0.24.0"
 };
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/bind.js":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/bind.js ***!
-  \****************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/bind.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/bind.js ***!
+  \*********************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -1333,16 +1362,16 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/buildURL.js":
-/*!********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/buildURL.js ***!
-  \********************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/buildURL.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/buildURL.js ***!
+  \*************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -1414,10 +1443,11 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/combineURLs.js":
-/*!***********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/combineURLs.js ***!
-  \***********************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/combineURLs.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/combineURLs.js ***!
+  \****************************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -1439,16 +1469,18 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/cookies.js":
-/*!*******************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/cookies.js ***!
-  \*******************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/cookies.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/cookies.js ***!
+  \************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
+
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1503,10 +1535,11 @@ module.exports = (
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!*************************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
-  \*************************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \******************************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -1522,22 +1555,19 @@ module.exports = function isAbsoluteURL(url) {
   // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
   // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
   // by any combination of letters, digits, plus, period, or hyphen.
-  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 };
 
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isAxiosError.js":
-/*!************************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isAxiosError.js ***!
-  \************************************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isAxiosError.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \*****************************************************************************************/
+/***/ ((module) => {
 
 "use strict";
-
-
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
 
 /**
  * Determines whether the payload is an error thrown by Axios
@@ -1546,22 +1576,22 @@ var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/cas
  * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
  */
 module.exports = function isAxiosError(payload) {
-  return utils.isObject(payload) && (payload.isAxiosError === true);
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
 };
 
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!***************************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
-  \***************************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \********************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1631,16 +1661,17 @@ module.exports = (
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!*******************************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
-  \*******************************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \************************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -1654,16 +1685,17 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/parseHeaders.js":
-/*!************************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/parseHeaders.js ***!
-  \************************************************************************************************/
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/parseHeaders.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*****************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js");
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js");
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -1718,10 +1750,11 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/spread.js":
-/*!******************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/spread.js ***!
-  \******************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/spread.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/spread.js ***!
+  \***********************************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -1756,16 +1789,18 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/validator.js":
-/*!*********************************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/validator.js ***!
-  \*********************************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/validator.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/validator.js ***!
+  \**************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var VERSION = (__webpack_require__(/*! ../env/data */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/env/data.js").version);
+
+var VERSION = (__webpack_require__(/*! ../env/data */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/env/data.js").version);
 
 var validators = {};
 
@@ -1849,16 +1884,17 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/utils.js ***!
-  \*********************************************************************************/
+
+/***/ "./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@acacha/casteaching/node_modules/axios/lib/utils.js ***!
+  \**************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/@albariius/casteaching_arr/node_modules/axios/lib/helpers/bind.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/@acacha/casteaching/node_modules/axios/lib/helpers/bind.js");
 
 // utils is a library of generic helper functions non-specific to axios
 
@@ -1871,7 +1907,7 @@ var toString = Object.prototype.toString;
  * @returns {boolean} True if value is an Array, otherwise false
  */
 function isArray(val) {
-  return Array.isArray(val);
+  return toString.call(val) === '[object Array]';
 }
 
 /**
@@ -1912,7 +1948,7 @@ function isArrayBuffer(val) {
  * @returns {boolean} True if value is an FormData, otherwise false
  */
 function isFormData(val) {
-  return toString.call(val) === '[object FormData]';
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
 }
 
 /**
@@ -1926,7 +1962,7 @@ function isArrayBufferView(val) {
   if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
     result = ArrayBuffer.isView(val);
   } else {
-    result = (val) && (val.buffer) && (isArrayBuffer(val.buffer));
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
   }
   return result;
 }
@@ -2033,7 +2069,7 @@ function isStream(val) {
  * @returns {boolean} True if value is a URLSearchParams object, otherwise false
  */
 function isURLSearchParams(val) {
-  return toString.call(val) === '[object URLSearchParams]';
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
 }
 
 /**
@@ -3682,12 +3718,19 @@ function onMutate(mutations) {
   addedAttributes.forEach((attrs, el) => {
     onAttributeAddeds.forEach((i) => i(el, attrs));
   });
+  for (let node of removedNodes) {
+    if (addedNodes.includes(node))
+      continue;
+    onElRemoveds.forEach((i) => i(node));
+  }
   addedNodes.forEach((node) => {
     node._x_ignoreSelf = true;
     node._x_ignore = true;
   });
   for (let node of addedNodes) {
     if (removedNodes.includes(node))
+      continue;
+    if (!node.isConnected)
       continue;
     delete node._x_ignoreSelf;
     delete node._x_ignore;
@@ -3699,11 +3742,6 @@ function onMutate(mutations) {
     delete node._x_ignoreSelf;
     delete node._x_ignore;
   });
-  for (let node of removedNodes) {
-    if (addedNodes.includes(node))
-      continue;
-    onElRemoveds.forEach((i) => i(node));
-  }
   addedNodes = null;
   removedNodes = null;
   addedAttributes = null;
@@ -3711,15 +3749,18 @@ function onMutate(mutations) {
 }
 
 // packages/alpinejs/src/scope.js
+function scope(node) {
+  return mergeProxies(closestDataStack(node));
+}
 function addScopeToNode(node, data2, referenceNode) {
   node._x_dataStack = [data2, ...closestDataStack(referenceNode || node)];
   return () => {
     node._x_dataStack = node._x_dataStack.filter((i) => i !== data2);
   };
 }
-function refreshScope(element, scope) {
+function refreshScope(element, scope2) {
   let existingScope = element._x_dataStack[0];
-  Object.entries(scope).forEach(([key, value]) => {
+  Object.entries(scope2).forEach(([key, value]) => {
     existingScope[key] = value;
   });
 }
@@ -3906,8 +3947,8 @@ function normalEvaluator(el, expression) {
 }
 function generateEvaluatorFromFunction(dataStack, func) {
   return (receiver = () => {
-  }, {scope = {}, params = []} = {}) => {
-    let result = func.apply(mergeProxies([scope, ...dataStack]), params);
+  }, {scope: scope2 = {}, params = []} = {}) => {
+    let result = func.apply(mergeProxies([scope2, ...dataStack]), params);
     runIfTypeOfFunction(receiver, result);
   };
 }
@@ -3934,10 +3975,10 @@ function generateFunctionFromString(expression, el) {
 function generateEvaluatorFromString(dataStack, expression, el) {
   let func = generateFunctionFromString(expression, el);
   return (receiver = () => {
-  }, {scope = {}, params = []} = {}) => {
+  }, {scope: scope2 = {}, params = []} = {}) => {
     func.result = void 0;
     func.finished = false;
-    let completeScope = mergeProxies([scope, ...dataStack]);
+    let completeScope = mergeProxies([scope2, ...dataStack]);
     if (typeof func === "function") {
       let promise = func(func, completeScope).catch((error2) => handleError(error2, el, expression));
       if (func.finished) {
@@ -3951,11 +3992,11 @@ function generateEvaluatorFromString(dataStack, expression, el) {
     }
   };
 }
-function runIfTypeOfFunction(receiver, value, scope, params, el) {
+function runIfTypeOfFunction(receiver, value, scope2, params, el) {
   if (typeof value === "function") {
-    let result = value.apply(scope, params);
+    let result = value.apply(scope2, params);
     if (result instanceof Promise) {
-      result.then((i) => runIfTypeOfFunction(receiver, i, scope, params)).catch((error2) => handleError(error2, el, value));
+      result.then((i) => runIfTypeOfFunction(receiver, i, scope2, params)).catch((error2) => handleError(error2, el, value));
     } else {
       receiver(result);
     }
@@ -4078,6 +4119,7 @@ var directiveOrder = [
   "ignore",
   "ref",
   "data",
+  "id",
   "bind",
   "init",
   "for",
@@ -4086,6 +4128,7 @@ var directiveOrder = [
   "show",
   "if",
   DEFAULT,
+  "teleport",
   "element"
 ];
 function byPriority(a, b) {
@@ -4154,7 +4197,7 @@ function start() {
   dispatch(document, "alpine:initializing");
   startObservingMutations();
   onElAdded((el) => initTree(el, walk));
-  onElRemoved((el) => nextTick(() => destroyTree(el)));
+  onElRemoved((el) => destroyTree(el));
   onAttributesAdded((el, attrs) => {
     directives(el, attrs).forEach((handle) => handle());
   });
@@ -4179,14 +4222,22 @@ function addInitSelector(selectorCallback) {
   initSelectorCallbacks.push(selectorCallback);
 }
 function closestRoot(el, includeInitSelectors = false) {
+  return findClosest(el, (element) => {
+    const selectors = includeInitSelectors ? allSelectors() : rootSelectors();
+    if (selectors.some((selector) => element.matches(selector)))
+      return true;
+  });
+}
+function findClosest(el, callback) {
   if (!el)
     return;
-  const selectors = includeInitSelectors ? allSelectors() : rootSelectors();
-  if (selectors.some((selector) => el.matches(selector)))
+  if (callback(el))
     return el;
+  if (el._x_teleportBack)
+    el = el._x_teleportBack;
   if (!el.parentElement)
     return;
-  return closestRoot(el.parentElement, includeInitSelectors);
+  return findClosest(el.parentElement, callback);
 }
 function isRoot(el) {
   return rootSelectors().some((selector) => el.matches(selector));
@@ -4276,7 +4327,7 @@ function setStylesFromString(el, value) {
   let cache = el.getAttribute("style", value);
   el.setAttribute("style", value);
   return () => {
-    el.setAttribute("style", cache);
+    el.setAttribute("style", cache || "");
   };
 }
 function kebabCase(subject) {
@@ -4612,200 +4663,6 @@ function dontRegisterReactiveSideEffects(callback) {
   overrideEffect(cache);
 }
 
-// packages/alpinejs/src/utils/debounce.js
-function debounce(func, wait) {
-  var timeout;
-  return function() {
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      func.apply(context, args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
-// packages/alpinejs/src/utils/throttle.js
-function throttle(func, limit) {
-  let inThrottle;
-  return function() {
-    let context = this, args = arguments;
-    if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
-    }
-  };
-}
-
-// packages/alpinejs/src/plugin.js
-function plugin(callback) {
-  callback(alpine_default);
-}
-
-// packages/alpinejs/src/store.js
-var stores = {};
-var isReactive = false;
-function store(name, value) {
-  if (!isReactive) {
-    stores = reactive(stores);
-    isReactive = true;
-  }
-  if (value === void 0) {
-    return stores[name];
-  }
-  stores[name] = value;
-  if (typeof value === "object" && value !== null && value.hasOwnProperty("init") && typeof value.init === "function") {
-    stores[name].init();
-  }
-  initInterceptors(stores[name]);
-}
-function getStores() {
-  return stores;
-}
-
-// packages/alpinejs/src/datas.js
-var datas = {};
-function data(name, callback) {
-  datas[name] = callback;
-}
-function injectDataProviders(obj, context) {
-  Object.entries(datas).forEach(([name, callback]) => {
-    Object.defineProperty(obj, name, {
-      get() {
-        return (...args) => {
-          return callback.bind(context)(...args);
-        };
-      },
-      enumerable: false
-    });
-  });
-  return obj;
-}
-
-// packages/alpinejs/src/alpine.js
-var Alpine = {
-  get reactive() {
-    return reactive;
-  },
-  get release() {
-    return release;
-  },
-  get effect() {
-    return effect;
-  },
-  get raw() {
-    return raw;
-  },
-  version: "3.5.2",
-  flushAndStopDeferringMutations,
-  disableEffectScheduling,
-  setReactivityEngine,
-  closestDataStack,
-  skipDuringClone,
-  addRootSelector,
-  deferMutations,
-  mapAttributes,
-  evaluateLater,
-  setEvaluator,
-  mergeProxies,
-  closestRoot,
-  interceptor,
-  transition,
-  setStyles,
-  mutateDom,
-  directive,
-  throttle,
-  debounce,
-  evaluate,
-  initTree,
-  nextTick,
-  prefix: setPrefix,
-  plugin,
-  magic,
-  store,
-  start,
-  clone,
-  data
-};
-var alpine_default = Alpine;
-
-// packages/alpinejs/src/index.js
-var import_reactivity9 = __toModule(require_reactivity());
-
-// packages/alpinejs/src/magics/$nextTick.js
-magic("nextTick", () => nextTick);
-
-// packages/alpinejs/src/magics/$dispatch.js
-magic("dispatch", (el) => dispatch.bind(dispatch, el));
-
-// packages/alpinejs/src/magics/$watch.js
-magic("watch", (el) => (key, callback) => {
-  let evaluate2 = evaluateLater(el, key);
-  let firstTime = true;
-  let oldValue;
-  effect(() => evaluate2((value) => {
-    let div = document.createElement("div");
-    div.dataset.throwAway = value;
-    if (!firstTime) {
-      queueMicrotask(() => {
-        callback(value, oldValue);
-        oldValue = value;
-      });
-    } else {
-      oldValue = value;
-    }
-    firstTime = false;
-  }));
-});
-
-// packages/alpinejs/src/magics/$store.js
-magic("store", getStores);
-
-// packages/alpinejs/src/magics/$data.js
-magic("data", (el) => {
-  return mergeProxies(closestDataStack(el));
-});
-
-// packages/alpinejs/src/magics/$root.js
-magic("root", (el) => closestRoot(el));
-
-// packages/alpinejs/src/magics/$refs.js
-magic("refs", (el) => {
-  if (el._x_refs_proxy)
-    return el._x_refs_proxy;
-  el._x_refs_proxy = mergeProxies(getArrayOfRefObject(el));
-  return el._x_refs_proxy;
-});
-function getArrayOfRefObject(el) {
-  let refObjects = [];
-  let currentEl = el;
-  while (currentEl) {
-    if (currentEl._x_refs)
-      refObjects.push(currentEl._x_refs);
-    currentEl = currentEl.parentNode;
-  }
-  return refObjects;
-}
-
-// packages/alpinejs/src/magics/$el.js
-magic("el", (el) => el);
-
-// packages/alpinejs/src/directives/x-ignore.js
-var handler = () => {
-};
-handler.inline = (el, {modifiers}, {cleanup}) => {
-  modifiers.includes("self") ? el._x_ignoreSelf = true : el._x_ignore = true;
-  cleanup(() => {
-    modifiers.includes("self") ? delete el._x_ignoreSelf : delete el._x_ignore;
-  });
-};
-directive("ignore", handler);
-
-// packages/alpinejs/src/directives/x-effect.js
-directive("effect", (el, {expression}, {effect: effect3}) => effect3(evaluateLater(el, expression)));
-
 // packages/alpinejs/src/utils/bind.js
 function bind(el, name, value, modifiers = []) {
   if (!el._x_bindings)
@@ -4924,8 +4781,291 @@ function isBooleanAttr(attrName) {
   return booleanAttributes.includes(attrName);
 }
 function attributeShouldntBePreservedIfFalsy(name) {
-  return !["aria-pressed", "aria-checked", "aria-expanded"].includes(name);
+  return !["aria-pressed", "aria-checked", "aria-expanded", "aria-selected"].includes(name);
 }
+function getBinding(el, name, fallback) {
+  if (el._x_bindings && el._x_bindings[name] !== void 0)
+    return el._x_bindings[name];
+  let attr = el.getAttribute(name);
+  if (attr === null)
+    return typeof fallback === "function" ? fallback() : fallback;
+  if (isBooleanAttr(name)) {
+    return !![name, "true"].includes(attr);
+  }
+  if (attr === "")
+    return true;
+  return attr;
+}
+
+// packages/alpinejs/src/utils/debounce.js
+function debounce(func, wait) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      func.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// packages/alpinejs/src/utils/throttle.js
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    let context = this, args = arguments;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// packages/alpinejs/src/plugin.js
+function plugin(callback) {
+  callback(alpine_default);
+}
+
+// packages/alpinejs/src/store.js
+var stores = {};
+var isReactive = false;
+function store(name, value) {
+  if (!isReactive) {
+    stores = reactive(stores);
+    isReactive = true;
+  }
+  if (value === void 0) {
+    return stores[name];
+  }
+  stores[name] = value;
+  if (typeof value === "object" && value !== null && value.hasOwnProperty("init") && typeof value.init === "function") {
+    stores[name].init();
+  }
+  initInterceptors(stores[name]);
+}
+function getStores() {
+  return stores;
+}
+
+// packages/alpinejs/src/binds.js
+var binds = {};
+function bind2(name, object) {
+  binds[name] = typeof object !== "function" ? () => object : object;
+}
+function injectBindingProviders(obj) {
+  Object.entries(binds).forEach(([name, callback]) => {
+    Object.defineProperty(obj, name, {
+      get() {
+        return (...args) => {
+          return callback(...args);
+        };
+      }
+    });
+  });
+  return obj;
+}
+
+// packages/alpinejs/src/datas.js
+var datas = {};
+function data(name, callback) {
+  datas[name] = callback;
+}
+function injectDataProviders(obj, context) {
+  Object.entries(datas).forEach(([name, callback]) => {
+    Object.defineProperty(obj, name, {
+      get() {
+        return (...args) => {
+          return callback.bind(context)(...args);
+        };
+      },
+      enumerable: false
+    });
+  });
+  return obj;
+}
+
+// packages/alpinejs/src/alpine.js
+var Alpine = {
+  get reactive() {
+    return reactive;
+  },
+  get release() {
+    return release;
+  },
+  get effect() {
+    return effect;
+  },
+  get raw() {
+    return raw;
+  },
+  version: "3.8.1",
+  flushAndStopDeferringMutations,
+  disableEffectScheduling,
+  setReactivityEngine,
+  closestDataStack,
+  skipDuringClone,
+  addRootSelector,
+  addInitSelector,
+  addScopeToNode,
+  deferMutations,
+  mapAttributes,
+  evaluateLater,
+  setEvaluator,
+  mergeProxies,
+  findClosest,
+  closestRoot,
+  interceptor,
+  transition,
+  setStyles,
+  mutateDom,
+  directive,
+  throttle,
+  debounce,
+  evaluate,
+  initTree,
+  nextTick,
+  prefixed: prefix,
+  prefix: setPrefix,
+  plugin,
+  magic,
+  store,
+  start,
+  clone,
+  bound: getBinding,
+  $data: scope,
+  data,
+  bind: bind2
+};
+var alpine_default = Alpine;
+
+// packages/alpinejs/src/index.js
+var import_reactivity9 = __toModule(require_reactivity());
+
+// packages/alpinejs/src/magics/$nextTick.js
+magic("nextTick", () => nextTick);
+
+// packages/alpinejs/src/magics/$dispatch.js
+magic("dispatch", (el) => dispatch.bind(dispatch, el));
+
+// packages/alpinejs/src/magics/$watch.js
+magic("watch", (el) => (key, callback) => {
+  let evaluate2 = evaluateLater(el, key);
+  let firstTime = true;
+  let oldValue;
+  effect(() => evaluate2((value) => {
+    JSON.stringify(value);
+    if (!firstTime) {
+      queueMicrotask(() => {
+        callback(value, oldValue);
+        oldValue = value;
+      });
+    } else {
+      oldValue = value;
+    }
+    firstTime = false;
+  }));
+});
+
+// packages/alpinejs/src/magics/$store.js
+magic("store", getStores);
+
+// packages/alpinejs/src/magics/$data.js
+magic("data", (el) => scope(el));
+
+// packages/alpinejs/src/magics/$root.js
+magic("root", (el) => closestRoot(el));
+
+// packages/alpinejs/src/magics/$refs.js
+magic("refs", (el) => {
+  if (el._x_refs_proxy)
+    return el._x_refs_proxy;
+  el._x_refs_proxy = mergeProxies(getArrayOfRefObject(el));
+  return el._x_refs_proxy;
+});
+function getArrayOfRefObject(el) {
+  let refObjects = [];
+  let currentEl = el;
+  while (currentEl) {
+    if (currentEl._x_refs)
+      refObjects.push(currentEl._x_refs);
+    currentEl = currentEl.parentNode;
+  }
+  return refObjects;
+}
+
+// packages/alpinejs/src/ids.js
+var globalIdMemo = {};
+function findAndIncrementId(name) {
+  if (!globalIdMemo[name])
+    globalIdMemo[name] = 0;
+  return ++globalIdMemo[name];
+}
+function closestIdRoot(el, name) {
+  return findClosest(el, (element) => {
+    if (element._x_ids && element._x_ids[name])
+      return true;
+  });
+}
+function setIdRoot(el, name) {
+  if (!el._x_ids)
+    el._x_ids = {};
+  if (!el._x_ids[name])
+    el._x_ids[name] = findAndIncrementId(name);
+}
+
+// packages/alpinejs/src/magics/$id.js
+magic("id", (el) => (name, key = null) => {
+  let root = closestIdRoot(el, name);
+  let id = root ? root._x_ids[name] : findAndIncrementId(name);
+  return key ? `${name}-${id}-${key}` : `${name}-${id}`;
+});
+
+// packages/alpinejs/src/magics/$el.js
+magic("el", (el) => el);
+
+// packages/alpinejs/src/directives/x-teleport.js
+directive("teleport", (el, {expression}, {cleanup}) => {
+  if (el.tagName.toLowerCase() !== "template")
+    warn("x-teleport can only be used on a <template> tag", el);
+  let target = document.querySelector(expression);
+  if (!target)
+    warn(`Cannot find x-teleport element for selector: "${expression}"`);
+  let clone2 = el.content.cloneNode(true).firstElementChild;
+  el._x_teleport = clone2;
+  clone2._x_teleportBack = el;
+  if (el._x_forwardEvents) {
+    el._x_forwardEvents.forEach((eventName) => {
+      clone2.addEventListener(eventName, (e) => {
+        e.stopPropagation();
+        el.dispatchEvent(new e.constructor(e.type, e));
+      });
+    });
+  }
+  addScopeToNode(clone2, {}, el);
+  mutateDom(() => {
+    target.appendChild(clone2);
+    initTree(clone2);
+    clone2._x_ignore = true;
+  });
+  cleanup(() => clone2.remove());
+});
+
+// packages/alpinejs/src/directives/x-ignore.js
+var handler = () => {
+};
+handler.inline = (el, {modifiers}, {cleanup}) => {
+  modifiers.includes("self") ? el._x_ignoreSelf = true : el._x_ignore = true;
+  cleanup(() => {
+    modifiers.includes("self") ? delete el._x_ignoreSelf : delete el._x_ignore;
+  });
+};
+directive("ignore", handler);
+
+// packages/alpinejs/src/directives/x-effect.js
+directive("effect", (el, {expression}, {effect: effect3}) => effect3(evaluateLater(el, expression)));
 
 // packages/alpinejs/src/utils/on.js
 function on(el, event, modifiers, callback) {
@@ -5190,8 +5330,9 @@ directive("html", (el, {expression}, {effect: effect3, evaluateLater: evaluateLa
 // packages/alpinejs/src/directives/x-bind.js
 mapAttributes(startingWith(":", into(prefix("bind:"))));
 directive("bind", (el, {value, modifiers, expression, original}, {effect: effect3}) => {
-  if (!value)
+  if (!value) {
     return applyBindingsObject(el, expression, original, effect3);
+  }
   if (value === "key")
     return storeKeyForXFor(el, expression);
   let evaluate2 = evaluateLater(el, expression);
@@ -5202,32 +5343,29 @@ directive("bind", (el, {value, modifiers, expression, original}, {effect: effect
   }));
 });
 function applyBindingsObject(el, expression, original, effect3) {
+  let bindingProviders = {};
+  injectBindingProviders(bindingProviders);
   let getBindings = evaluateLater(el, expression);
   let cleanupRunners = [];
-  effect3(() => {
-    while (cleanupRunners.length)
-      cleanupRunners.pop()();
-    getBindings((bindings) => {
-      let attributes = Object.entries(bindings).map(([name, value]) => ({name, value}));
-      attributes = attributes.filter((attr) => {
-        return !(typeof attr.value === "object" && !Array.isArray(attr.value) && attr.value !== null);
-      });
-      let staticAttributes = attributesOnly(attributes);
-      attributes = attributes.map((attribute) => {
-        if (staticAttributes.find((attr) => attr.name === attribute.name)) {
-          return {
-            name: `x-bind:${attribute.name}`,
-            value: `"${attribute.value}"`
-          };
-        }
-        return attribute;
-      });
-      directives(el, attributes, original).map((handle) => {
-        cleanupRunners.push(handle.runCleanups);
-        handle();
-      });
+  while (cleanupRunners.length)
+    cleanupRunners.pop()();
+  getBindings((bindings) => {
+    let attributes = Object.entries(bindings).map(([name, value]) => ({name, value}));
+    let staticAttributes = attributesOnly(attributes);
+    attributes = attributes.map((attribute) => {
+      if (staticAttributes.find((attr) => attr.name === attribute.name)) {
+        return {
+          name: `x-bind:${attribute.name}`,
+          value: `"${attribute.value}"`
+        };
+      }
+      return attribute;
     });
-  });
+    directives(el, attributes, original).map((handle) => {
+      cleanupRunners.push(handle.runCleanups);
+      handle();
+    });
+  }, {scope: bindingProviders});
 }
 function storeKeyForXFor(el, expression) {
   el._x_keyExpression = expression;
@@ -5320,15 +5458,15 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
     let keys = [];
     if (isObject(items)) {
       items = Object.entries(items).map(([key, value]) => {
-        let scope = getIterationScopeVariables(iteratorNames, value, key, items);
-        evaluateKey((value2) => keys.push(value2), {scope: {index: key, ...scope}});
-        scopes.push(scope);
+        let scope2 = getIterationScopeVariables(iteratorNames, value, key, items);
+        evaluateKey((value2) => keys.push(value2), {scope: {index: key, ...scope2}});
+        scopes.push(scope2);
       });
     } else {
       for (let i = 0; i < items.length; i++) {
-        let scope = getIterationScopeVariables(iteratorNames, items[i], i, items);
-        evaluateKey((value) => keys.push(value), {scope: {index: i, ...scope}});
-        scopes.push(scope);
+        let scope2 = getIterationScopeVariables(iteratorNames, items[i], i, items);
+        evaluateKey((value) => keys.push(value), {scope: {index: i, ...scope2}});
+        scopes.push(scope2);
       }
     }
     let adds = [];
@@ -5373,7 +5511,9 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
       mutateDom(() => {
         elForSpot.after(marker);
         elInSpot.after(elForSpot);
+        elForSpot._x_currentIfEl && elForSpot.after(elForSpot._x_currentIfEl);
         marker.before(elInSpot);
+        elInSpot._x_currentIfEl && elInSpot.after(elInSpot._x_currentIfEl);
         marker.remove();
       });
       refreshScope(elForSpot, scopes[keys.indexOf(keyForSpot)]);
@@ -5381,10 +5521,12 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
     for (let i = 0; i < adds.length; i++) {
       let [lastKey2, index] = adds[i];
       let lastEl = lastKey2 === "template" ? templateEl : lookup[lastKey2];
-      let scope = scopes[index];
+      if (lastEl._x_currentIfEl)
+        lastEl = lastEl._x_currentIfEl;
+      let scope2 = scopes[index];
       let key = keys[index];
       let clone2 = document.importNode(templateEl.content, true).firstElementChild;
-      addScopeToNode(clone2, reactive(scope), templateEl);
+      addScopeToNode(clone2, reactive(scope2), templateEl);
       mutateDom(() => {
         lastEl.after(clone2);
         initTree(clone2);
@@ -5490,11 +5632,23 @@ directive("if", (el, {expression}, {effect: effect3, cleanup}) => {
   cleanup(() => el._x_undoIf && el._x_undoIf());
 });
 
+// packages/alpinejs/src/directives/x-id.js
+directive("id", (el, {expression}, {evaluate: evaluate2}) => {
+  let names = evaluate2(expression);
+  names.forEach((name) => setIdRoot(el, name));
+});
+
 // packages/alpinejs/src/directives/x-on.js
 mapAttributes(startingWith("@", into(prefix("on:"))));
 directive("on", skipDuringClone((el, {value, modifiers, expression}, {cleanup}) => {
   let evaluate2 = expression ? evaluateLater(el, expression) : () => {
   };
+  if (el.tagName.toLowerCase() === "template") {
+    if (!el._x_forwardEvents)
+      el._x_forwardEvents = [];
+    if (!el._x_forwardEvents.includes(value))
+      el._x_forwardEvents.push(value);
+  }
   let removeListener = on(el, value, modifiers, (e) => {
     evaluate2(() => {
     }, {scope: {$event: e}, params: [e]});
@@ -7674,7 +7828,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return window.casteaching.video.destroy(_this.video.id);
+                return window.api.video.destroy(_this.video.id);
 
               case 3:
                 _this.$emit('removed');
@@ -7840,7 +7994,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     store: function store() {
       try {
-        window.casteaching.video.create({
+        window.api.video.create({
           title: this.video.title,
           description: this.video.description,
           url: this.video.url
@@ -7853,7 +8007,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     update: function update() {
       try {
-        window.casteaching.video.update(this.video.id, {
+        window.api.video.update(this.video.id, {
           title: this.video.title,
           description: this.video.description,
           url: this.video.url
@@ -8037,7 +8191,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return window.casteaching.videos();
+                return window.api.videos();
 
               case 2:
                 _this2.videos = _context2.sent;
@@ -8083,7 +8237,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_VideosList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/VideosList */ "./resources/js/components/VideosList.vue");
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-/* harmony import */ var _albariius_casteaching_arr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @albariius/casteaching_arr */ "./node_modules/@albariius/casteaching_arr/index.js");
+
+/* harmony import */ var _acacha_casteaching__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @acacha/casteaching */ "./node_modules/@acacha/casteaching/index.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _components_VideoForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/VideoForm */ "./resources/js/components/VideoForm.vue");
 /* harmony import */ var _components_Status__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Status */ "./resources/js/components/Status.vue");
@@ -8097,7 +8252,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
-window.casteaching = _albariius_casteaching_arr__WEBPACK_IMPORTED_MODULE_2__["default"];
+
+window.api = (0,_acacha_casteaching__WEBPACK_IMPORTED_MODULE_2__["default"])({
+  baseURL: '/api'
+});
 window.Vue = vue__WEBPACK_IMPORTED_MODULE_5__["default"];
 window.Vue.component('videos-list', _components_VideosList__WEBPACK_IMPORTED_MODULE_0__["default"]);
 window.Vue.component('video-form', _components_VideoForm__WEBPACK_IMPORTED_MODULE_3__["default"]);
@@ -26370,7 +26528,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   "ed6f95c6",
   null
-  
+
 )
 
 /* hot reload */
@@ -26409,7 +26567,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   "0003dd84",
   null
-  
+
 )
 
 /* hot reload */
@@ -26448,7 +26606,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   "2d31eee4",
   null
-  
+
 )
 
 /* hot reload */
@@ -26487,7 +26645,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   "3a0e8284",
   null
-  
+
 )
 
 /* hot reload */
@@ -26526,7 +26684,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   "6301b8d7",
   null
-  
+
 )
 
 /* hot reload */
@@ -26565,7 +26723,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   null,
   null
-  
+
 )
 
 /* hot reload */
@@ -26587,7 +26745,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Status_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Status.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Status.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Status_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Status_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -26603,7 +26761,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDestroyLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./VideoDestroyLink.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/VideoDestroyLink.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDestroyLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoDestroyLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -26619,7 +26777,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoEditLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./VideoEditLink.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/VideoEditLink.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoEditLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoEditLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -26635,7 +26793,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./VideoForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/VideoForm.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -26651,7 +26809,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoShowLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./VideoShowLink.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/VideoShowLink.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoShowLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoShowLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -26667,7 +26825,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideosList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./VideosList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/VideosList.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideosList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VideosList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -39708,7 +39866,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -39722,20 +39880,20 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -39768,7 +39926,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -39780,7 +39938,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -39792,7 +39950,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -39804,12 +39962,12 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -39820,7 +39978,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -39829,11 +39987,11 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/ 		
+/******/
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -39841,19 +39999,19 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
 /******/ 		};
-/******/ 		
+/******/
 /******/ 		// no chunk on demand loading
-/******/ 		
+/******/
 /******/ 		// no prefetching
-/******/ 		
+/******/
 /******/ 		// no preloaded
-/******/ 		
+/******/
 /******/ 		// no HMR
-/******/ 		
+/******/
 /******/ 		// no HMR manifest
-/******/ 		
+/******/
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
+/******/
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -39874,24 +40032,24 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
 /******/ 					installedChunks[chunkId][0]();
 /******/ 				}
-/******/ 				installedChunks[chunkIds[i]] = 0;
+/******/ 				installedChunks[chunkId] = 0;
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/ 		
+/******/
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+/******/
 /******/ })()
 ;
