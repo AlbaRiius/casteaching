@@ -87,8 +87,7 @@ export default
     },
     methods: {
         async getVideos() {
-            this.videos = await casteaching({baseUrl:'https://casetaching.test/api'}).videos();
-                //window.casteaching.videos()
+            this.videos = await window.api.videos()
         },
         async refresh() {
             this.getVideos()
