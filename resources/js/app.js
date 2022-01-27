@@ -1,6 +1,6 @@
 import VideosList from "./components/VideosList";
 import Alpine from 'alpinejs';
-import casteaching from '../../casteaching_arr_package';
+import casteaching from  '@acacha/casteaching';
 import Vue from 'vue';
 import VideoForm from "./components/VideoForm";
 import Status from "./components/Status";
