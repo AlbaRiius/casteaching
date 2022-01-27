@@ -23,7 +23,6 @@
     },
     "dependencies": {
         "@albariius/casteaching_arr": "^1.0.2",
-        "casteaching": "file:./casteaching_package",
         "semver": "^7.3.5",
         "vue": "^2.6.14"
     }
