@@ -24,7 +24,7 @@ https://tubeme.acacha.org/tdd
 
 # Projectes en explotació dels alumnes
 
-- Tur Badenas, Sergi: Alumne DAM Prova: http://casteaching.alumnedam.me/
+- Tur Badenas, Sergi: Alumne DAM Prova: https://casteaching.alumnedam.me/
 
 # Versió de l'aplicació per a mòbils
 
