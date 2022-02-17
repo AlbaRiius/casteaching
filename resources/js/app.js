@@ -8,7 +8,7 @@ import Status from "./components/Status";
 require('./bootstrap');
 
 window.Alpine = Alpine;
-window.api = casteaching({baseURL:'/api'});
+window.casteaching = casteaching();
 window.Vue = Vue;
 
 window.Vue.component('videos-list', VideosList )
