@@ -29,3 +29,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 
 Route::post('/sanctum/token',\App\Http\Controllers\SanctumTokenController::class);
+
+Route::get('/series', [ SeriesApiController::class,'index']);
+Route::get('/series/{id}', [ SeriesApiController::class,'show']);
