@@ -45,13 +45,10 @@ class GithubAuthControllerTest extends TestCase
         $this->assertNotNull($user);
         $this->assertEquals($user->name,GithubDriverMock::NAME);
         $this->assertEquals($user->email,GithubDriverMock::EMAIL);
-//        $this->assertTrue($user->email_verified_at);
         $this->assertNotNull($user->password);
-//        $this->assertNotNull($user->profile_photo_path);
         $this->assertNull($user->superadmin);
         $this->assertEquals($user->github_id,GithubDriverMock::ID);
         $this->assertEquals($user->github_nickname,GithubDriverMock::NICKNAME);
-//        $this->assertEquals($user->github_avatar,GithubDriverMock::AVATAR);
         $this->assertEquals($user->github_token,GithubDriverMock::TOKEN);
         $this->assertNull($user->github_refresh_token);
 
@@ -63,7 +60,7 @@ class GithubAuthControllerTest extends TestCase
     public function can_process_a_github_callback_if_user_with_same_github_id_exists()
     {
         $sergi = User::create([
-            'name' => 'Pepe',
+            'name' => 'Alba Rius Rivas',
             'email' => 'dsaasd@dassd.es',
             'password' => Hash::make('12345678'),
             'github_id' => GithubDriverMock::ID
@@ -103,7 +100,7 @@ class GithubAuthControllerTest extends TestCase
     public function can_process_a_github_callback_if_user_with_same_email_id_exists()
     {
         $sergi = User::create([
-            'name' => 'Pepe',
+            'name' => 'Alba Rius Rivas',
             'email' => GithubDriverMock::EMAIL,
             'password' => Hash::make('12345678'),
         ]);

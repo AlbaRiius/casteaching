@@ -24,7 +24,7 @@ class SendVideoCreatedNotificationTest extends TestCase
         $sender = new SendVideoCreatedNotification();
 
         Notification::fake();
-        $sender->handle(new VideoCreatedEvent($video = create_sample_video()));
+        $sender->handle(new VideoCreatedEvent($video = create_sample_videos()));
 
         $admins = config('casteaching.admins');
 
