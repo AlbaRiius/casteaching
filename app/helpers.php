@@ -294,7 +294,7 @@ if (! function_exists('create_sample_series')) {
         $serie2 = Serie::create([
             'title' => 'Crud amb Vue i Laravel',
             'description' => 'Bla bla bla',
-            'image' => 'tdd2.png',
+            'image' => 'crud_amb_vue_laravel.png',
             'teacher_name' => 'Sergi Tur Badenas',
             'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
         ]);
