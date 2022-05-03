@@ -1511,6 +1511,9 @@ select {
 .w-5\/6 {
 	width: 83.333333%;
 }
+.w-1\/2 {
+	width: 50%;
+}
 .min-w-0 {
 	min-width: 0px;
 }
@@ -1592,6 +1595,9 @@ select {
 .grid-cols-3 {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+.flex-row {
+	flex-direction: row;
+}
 .flex-col {
 	flex-direction: column;
 }
@@ -1609,6 +1615,9 @@ select {
 }
 .justify-between {
 	justify-content: space-between;
+}
+.justify-items-center {
+	justify-items: center;
 }
 .gap-6 {
 	gap: 1.5rem;
