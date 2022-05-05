@@ -1546,6 +1546,12 @@ select {
 .w-14 {
 	width: 3.5rem;
 }
+.w-80 {
+	width: 20rem;
+}
+.w-64 {
+	width: 16rem;
+}
 .min-w-0 {
 	min-width: 0px;
 }
@@ -3142,6 +3148,14 @@ select {
 
 	.md\:ml-0 {
 		margin-left: 0px;
+	}
+
+	.md\:mr-2 {
+		margin-right: 0.5rem;
+	}
+
+	.md\:inline {
+		display: inline;
 	}
 
 	.md\:flex {
