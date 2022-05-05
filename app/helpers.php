@@ -221,14 +221,16 @@ if (! function_exists('create_sample_videos')) {
             'url' => 'https://www.youtube.com/embed/w8j07_DBl_I'
         ]);
         $video2 = Video::create([
-            'title' => 'Vídeo 2',
-            'description' => 'Bla bla bla',
-            'url' => 'https://www.youtube.com/embed/w8j07_DBl_I'
+            'title' => 'Video 2',
+            'description' => 'Descripció',
+            'url' => 'https://www.youtube.com/embed/zyABmm6Dw64',
+            'published_at' => Carbon::parse('December 13, 2020 8:00pm'),
         ]);
+
         $video3 = Video::create([
             'title' => 'Vídeo 3',
             'description' => 'Bla bla bla',
-            'url' => 'https://www.youtube.com/embed/w8j07_DBl_I'
+            'url' => 'https://www.youtube.com/embed/a4ez0CcEHV4'
         ]);
 
         return [$video1, $video2, $video3];
