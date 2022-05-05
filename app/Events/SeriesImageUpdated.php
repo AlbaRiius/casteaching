@@ -14,9 +14,8 @@ use Illuminate\Queue\SerializesModels;
 class SeriesImageUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-
-    protected Serie $serie;
+    
+    public Serie $serie;
 
     /**
      * Create a new event instance.
