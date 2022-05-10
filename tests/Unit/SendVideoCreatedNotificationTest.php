@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Tests\TestCase;
 
 /**
- * @covers SendVideoCreatedNotificationTODO::class
+ * @covers SendVideoCreatedNotification::class
  */
 class SendVideoCreatedNotificationTest extends TestCase
 {
@@ -24,7 +24,7 @@ class SendVideoCreatedNotificationTest extends TestCase
         $sender = new SendVideoCreatedNotification();
 
         Notification::fake();
-        $sender->handle(new VideoCreatedEvent($video = create_sample_video()));
+        $sender->handle(new VideoCreatedEvent($video = create_sample_videos()));
 
         $admins = config('casteaching.admins');
 

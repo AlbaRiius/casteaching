@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VideosApiController;
+use App\Http\Controllers\SeriesApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 
 Route::post('/sanctum/token',\App\Http\Controllers\SanctumTokenController::class);
+
+Route::get('/series', [ SeriesApiController::class,'index']);
+Route::get('/series/{id}', [ SeriesApiController::class,'show']);

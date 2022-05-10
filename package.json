@@ -23,7 +23,6 @@
     },
     "dependencies": {
         "@acacha/casteaching": "^1.0.12",
-        "fsevents": "^2.3.2",
         "semver": "^7.3.5",
         "vue": "^2.6.14"
     }

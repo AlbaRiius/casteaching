@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Events\SeriesImageUpdated;
+use App\Listeners\ScheduleSeriesImageProcessing;
+use App\Listeners\SendVideoCreatedNotification;
+use App\Notifications\VideoCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-use App\Listeners\SendVideoCreatedNotification;
-use App\Events\VideoCreated;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        VideoCreated::class => [
+            SendVideoCreatedNotification::class,
+        ],
+        SeriesImageUpdated::class => [
+            ScheduleSeriesImageProcessing::class
+        ]
     ];
 
     /**

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-white">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,10 +16,25 @@
 
         @livewireStyles
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z380SERWJ"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-2Z380SERWJ');
+        </script>
+
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+
+        @paddleJS
+
     </head>
-    <body class="font-sans antialiased">
+
+
+
+    <body class="font-sans antialiased h-full">
     <x-jet-banner />
 
     <div class="min-h-screen bg-gray-100">
@@ -35,7 +50,7 @@
     @endif
 
     <!-- Page Content -->
-        <main id="app">
+        <main>
             {{ $slot }}
         </main>
     </div>

@@ -25,7 +25,7 @@ class SanctumTokenControllerTest extends TestCase
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The email field is required.",$jsonResponse->message);
         $this->assertEquals("The email field is required.",$jsonResponse->errors->email[0]);
 
     }
@@ -35,14 +35,14 @@ class SanctumTokenControllerTest extends TestCase
     {
         // Execució
         $response = $this->postJson('/api/sanctum/token',[
-            'email' => 'notvalidemail',
+            'email' => 'pepemanolo@gmail.com',
             'password' => '12345678',
             'device_name' => "Pepe's device",
         ]);
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->message);
         $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->errors->email[0]);
     }
 
@@ -57,7 +57,7 @@ class SanctumTokenControllerTest extends TestCase
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The password field is required.",$jsonResponse->message);
         $this->assertEquals("The password field is required.",$jsonResponse->errors->password[0]);
     }
 
@@ -72,7 +72,7 @@ class SanctumTokenControllerTest extends TestCase
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The device name field is required.",$jsonResponse->message);
         $this->assertEquals("The device name field is required.",$jsonResponse->errors->device_name[0]);
     }
 
@@ -95,7 +95,7 @@ class SanctumTokenControllerTest extends TestCase
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->message);
         $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->errors->email[0]);
     }
 
@@ -118,7 +118,7 @@ class SanctumTokenControllerTest extends TestCase
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->message);
         $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->errors->email[0]);
     }
 
